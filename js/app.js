@@ -56,6 +56,37 @@ const cargarTabla = () => {
   });
 };
 
+const searchInput = document.querySelector("#searchInput");
+const bodyTabla = document.querySelector("#cuerpo-tabla");
+
+// Agrega un evento de escucha al campo de búsqueda
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filteredData = datos.filter((item) => {
+    return (
+      item.gift.toLowerCase().includes(searchTerm) ||
+      item.tipo.toLowerCase().includes(searchTerm) ||
+      item.tiempo.toLowerCase().includes(searchTerm) ||
+      item.precio.toString().includes(searchTerm)
+    );
+  });
+
+  // Vuelve a cargar la tabla con los resultados filtrados
+  cargarTabla(filteredData);
+});
+
+// Función para cargar la tabla (también puede utilizarse para cargar la tabla inicial)
+function cargarTabla(data) {
+  bodyTabla.innerHTML = "";
+  data.forEach((item) => {
+    // Crea filas de tabla...
+  });
+}
+
+// Llama a cargarTabla para cargar la tabla inicial
+cargarTabla(datos);
+
+
 const agregarGift = (event) => {
   event.preventDefault();
 
