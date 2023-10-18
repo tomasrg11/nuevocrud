@@ -1,5 +1,5 @@
 import datos from "/data/data.json" assert { type: "json" };
-import { Gift } from "/clases.js";
+import { Gift } from "/js/clases.js";
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
@@ -59,7 +59,6 @@ const cargarTabla = () => {
 const searchInput = document.querySelector("#searchInput");
 const bodyTabla = document.querySelector("#cuerpo-tabla");
 
-// Agrega un evento de escucha al campo de búsqueda
 searchInput.addEventListener("input", () => {
   const searchTerm = searchInput.value.toLowerCase();
   const filteredData = datos.filter((item) => {
@@ -71,26 +70,21 @@ searchInput.addEventListener("input", () => {
     );
   });
 
-  // Vuelve a cargar la tabla con los resultados filtrados
   cargarTabla(filteredData);
 });
 
-// Función para cargar la tabla (también puede utilizarse para cargar la tabla inicial)
 function cargarTabla(data) {
   bodyTabla.innerHTML = "";
   data.forEach((item) => {
-    // Crea filas de tabla...
   });
 }
 
-// Llama a cargarTabla para cargar la tabla inicial
 cargarTabla(datos);
 
-
-const agregarGift = (event) => {
+function agregarGift(event) {
   event.preventDefault();
 
-  let id = datos.at(-1).id + 1;
+  let id = datos.length > 0 ? datos[datos.length - 1].id + 1 : 1;
   let gift = document.querySelector("#gift").value;
   let tipo = document.querySelector("#tipo").value;
   let tiempo = document.querySelector("#tiempo").value;
@@ -99,10 +93,10 @@ const agregarGift = (event) => {
 
   datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
   document.querySelector("#formGift").reset();
+  guardarDatosEnLocalStorage(datos);
   cargarTabla();
-};
-
-window.borrarGift = (id) => {
+}
+function borrarGift(id) {
   let index = datos.findIndex((item) => item.id == id);
 
   let validar = confirm(
@@ -111,10 +105,10 @@ window.borrarGift = (id) => {
 
   if (validar) {
     datos.splice(index, 1);
+    guardarDatosEnLocalStorage(datos);
     cargarTabla();
   }
-};
-
+}
 cargarTabla();
 
 document.querySelector("#formGift").addEventListener("submit", agregarGift);
