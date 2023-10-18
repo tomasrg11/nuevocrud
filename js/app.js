@@ -1,5 +1,5 @@
-import datos from "../data/data.json" assert { type: "json" };
-import { Gift } from "./clases.js";
+import datos from "/data/data.json" assert { type: "json" };
+import { Gift } from "/clases.js";
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
